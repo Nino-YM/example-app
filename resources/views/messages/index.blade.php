@@ -28,6 +28,9 @@
         </div>
     @endforeach
 
-    {{ $messages->links() }}
+
+    <div class="d-flex justify-content-center">
+        {{ $messages->links('pagination::bootstrap-4') }}
+    </div>
 </div>
 @endsection
