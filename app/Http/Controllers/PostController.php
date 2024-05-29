@@ -1,28 +1,27 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Message;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class MessageController extends Controller
+class PostController extends Controller
 {
     public function index()
     {
-        $messages = Message::orderBy('created_at', 'desc')->paginate(10);
-        return view('messages.index', compact('messages'));
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        return view('posts.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('messages.create');
+        return view('posts.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'text' => 'required',
+            'content' => 'required',
             'image' => 'image|nullable',
             'tags' => 'nullable'
         ]);
@@ -32,49 +31,49 @@ class MessageController extends Controller
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        Message::create([
+        Post::create([
             'user_id' => auth()->id(),
-            'text' => $request->text,
+            'content' => $request->content,
             'image' => $imagePath,
             'tags' => $request->tags ? explode(',', $request->tags) : [],
         ]);
 
-        return redirect()->route('messages.index');
+        return redirect()->route('posts.index');
     }
 
-    public function edit(Message $message)
+    public function edit(Post $post)
     {
-        return view('messages.edit', compact('message'));
+        return view('posts.edit', compact('post'));
     }
 
-    public function update(Request $request, Message $message)
+    public function update(Request $request, Post $post)
     {
         $request->validate([
-            'text' => 'required',
+            'content' => 'required',
             'image' => 'image|nullable',
             'tags' => 'nullable'
         ]);
 
-        $imagePath = $message->image;
+        $imagePath = $post->image;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        $message->update([
-            'text' => $request->text,
+        $post->update([
+            'content' => $request->content,
             'image' => $imagePath,
             'tags' => $request->tags ? explode(',', $request->tags) : [],
         ]);
 
-        return redirect()->route('messages.index');
+        return redirect()->route('posts.index');
     }
 
-    public function destroy(Message $message)
+    public function destroy(Post $post)
     {
-        if ($message->image) {
-            Storage::disk('public')->delete($message->image);
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
         }
-        $message->delete();
-        return redirect()->route('messages.index');
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

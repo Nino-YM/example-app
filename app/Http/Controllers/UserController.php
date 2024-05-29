@@ -32,7 +32,7 @@ class UserController extends Controller
     {
         $request->validate([
                 'pseudo' => 'required|max:40',
-                'image' => 'nullable||string',
+                'image' => 'nullable||image',
             ]);
             $user->update($request->all());
             return back()->with('message', 'Le compte a bien été modifié.');

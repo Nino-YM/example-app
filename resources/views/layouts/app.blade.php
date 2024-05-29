@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources\css\app.css" rel="stylesheet">
 </head>
 </head>
 <body>
@@ -27,7 +28,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <a class="nav-link" href="{{ route('messages.create') }}">Create Message</a>
+                <a class="nav-link" href="{{ route('posts.create') }}">Create Post</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -81,8 +82,8 @@
         <main class="py-4">
             @yield('content')
             <div class="container-fluid text-center ">
-                @if (session()->has('message'))
-                    <p class="alert alert-success">{{ session()->get('message') }}</p>
+                @if (session()->has('Post'))
+                    <p class="alert alert-success">{{ session()->get('Post') }}</p>
                 @endif
                 @if ($errors->any())
                     <div class="alert alert-danger">

@@ -24,3 +24,19 @@
     background-color: #007bff;
     border-color: #007bff;
 }
+
+.profile-pic-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    padding: 5px;
+    background: #fff;
+}

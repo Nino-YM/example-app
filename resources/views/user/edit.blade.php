@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Nouvelle image</label>
-                    <input type="text" class="form-control" placeholder="modifier" name="image"
+                    <input type="file" class="form-control" placeholder="modifier" name="image"
                         value="{{ $user->image }}" id="image">
                 </div>
                 <button type="submit" class="btn btn-primary">Valider</button>
