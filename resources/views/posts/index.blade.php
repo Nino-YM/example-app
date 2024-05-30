@@ -21,6 +21,8 @@
 
                 @can('update', $post)
                     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                @endcan
+                @can('delete', $post)
                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
@@ -38,6 +40,8 @@
                                 <p class="card-text"><small class="text-muted">Commented by {{ $comment->user->pseudo }} on {{ $comment->created_at->format('d M Y H:i') }}</small></p>
                                 @can('update', $comment)
                                     <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                @endcan
+                                @can('delete', $comment)
                                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
