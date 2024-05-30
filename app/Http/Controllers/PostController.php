@@ -45,17 +45,13 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        if (Auth::id() !== $post->user_id && Auth::user()->role_id !== 2) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('update', $post);
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
-        if (Auth::id() !== $post->user_id && Auth::user()->role_id !== 2) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('update', $post);
 
         $request->validate([
             'content' => 'required',
@@ -79,9 +75,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        if (Auth::id() !== $post->user_id && Auth::user()->role_id !== 2) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('delete', $post);
 
         if ($post->image) {
             Storage::disk('public')->delete($post->image);
