@@ -25,13 +25,18 @@ class CommentController extends Controller
 
     public function edit(Comment $comment)
     {
-        $this->authorize('update', $comment);
+        if (Auth::id() !== $comment->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+        
         return view('comments.edit', compact('comment'));
     }
 
     public function update(Request $request, Comment $comment)
     {
-        $this->authorize('update', $comment);
+        if (Auth::id() !== $comment->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $request->validate([
             'content' => 'required|string',
@@ -46,7 +51,10 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        $this->authorize('delete', $comment);
+        if (Auth::id() !== $comment->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $comment->delete();
         return back();
     }

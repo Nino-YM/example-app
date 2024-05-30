@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -43,11 +45,18 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        if (Auth::id() !== $post->user_id && Auth::user()->role_id !== 2) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
+        if (Auth::id() !== $post->user_id && Auth::user()->role_id !== 2) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $request->validate([
             'content' => 'required',
             'image' => 'image|nullable',
@@ -70,6 +79,10 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        if (Auth::id() !== $post->user_id && Auth::user()->role_id !== 2) {
+            abort(403, 'Unauthorized action.');
+        }
+
         if ($post->image) {
             Storage::disk('public')->delete($post->image);
         }

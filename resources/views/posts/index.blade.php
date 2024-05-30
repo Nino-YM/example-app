@@ -18,12 +18,15 @@
                     @endif
                 </p>
                 <p class="card-text"><small class="text-muted">Posted on {{ $post->created_at->format('d M Y H:i') }}</small></p>
-                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
-                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+
+                @if (auth()->check() && (auth()->id() === $post->user_id || auth()->user()->role_id === 2) && auth()->user()->role_id !== 0)
+                    <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                @endif
 
                 <!-- Display Comments -->
                 <div class="mt-3">
