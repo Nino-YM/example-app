@@ -5,7 +5,7 @@
     @foreach ($posts as $post)
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">{{ $post->user->name }}</h5>
+                <h5 class="card-title">{{ $post->user->pseudo }}</h5>
                 <p class="card-text">{{ $post->content }}</p>
                 @if ($post->image)
                     <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="Post Image">
@@ -19,7 +19,7 @@
                 </p>
                 <p class="card-text"><small class="text-muted">Posted on {{ $post->created_at->format('d M Y H:i') }}</small></p>
 
-                @if (auth()->check() && (auth()->id() === $post->user_id || auth()->user()->role_id === 2) && auth()->user()->role_id !== 0)
+                @if (auth()->check() && (auth()->id() === $post->user_id || auth()->user()->role_id === 2))
                     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
                         @csrf
@@ -36,7 +36,7 @@
                             <div class="card-body">
                                 <p class="card-text">{{ $comment->content }}</p>
                                 <p class="card-text"><small class="text-muted">Commented by {{ $comment->user->pseudo }} on {{ $comment->created_at->format('d M Y H:i') }}</small></p>
-                                @if ($comment->user_id == auth()->id())
+                                @if (auth()->check() && (auth()->id() === $comment->user_id || auth()->user()->role_id === 2))
                                     <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
                                         @csrf

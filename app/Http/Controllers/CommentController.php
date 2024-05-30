@@ -25,7 +25,7 @@ class CommentController extends Controller
 
     public function edit(Comment $comment)
     {
-        if (Auth::id() !== $comment->user_id) {
+        if (Auth::id() !== $comment->user_id && Auth::user()->role_id !== 2) {
             abort(403, 'Unauthorized action.');
         }
         
@@ -34,7 +34,7 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
-        if (Auth::id() !== $comment->user_id) {
+        if (Auth::id() !== $comment->user_id && Auth::user()->role_id !== 2) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -51,7 +51,7 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        if (Auth::id() !== $comment->user_id) {
+        if (Auth::id() !== $comment->user_id && Auth::user()->role_id !== 2) {
             abort(403, 'Unauthorized action.');
         }
 
