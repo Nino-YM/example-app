@@ -20,7 +20,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="resources\css\app.css" rel="stylesheet">
 </head>
-</head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -57,11 +56,11 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->pseudo }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a href="{{ route('users.edit', $user = Auth::user()) }}">Mon compte</a>
+                                    <a class="dropdown-item" href="{{ route('users.edit', $user = Auth::user()) }}">My profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -81,7 +80,7 @@
 
         <main class="py-4">
             @yield('content')
-            <div class="container-fluid text-center ">
+            <div class="container-fluid text-center">
                 @if (session()->has('Post'))
                     <p class="alert alert-success">{{ session()->get('Post') }}</p>
                 @endif
@@ -97,5 +96,10 @@
             </div>
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
