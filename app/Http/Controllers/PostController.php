@@ -48,6 +48,17 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $posts = Post::where('content', 'LIKE', "%$query%")
+                     ->orWhere('tags', 'LIKE', "%$query%")
+                     ->paginate(10);
+
+        return view('posts.searchresults', compact('posts', 'query'));
+    }
+
     public function update(Request $request, Post $post)
     {
         $this->authorize('update', $post);
