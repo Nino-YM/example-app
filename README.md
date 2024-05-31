@@ -64,3 +64,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+If the default profile pic doesn't work. Make sure to add one of your own in public/storage/default_images, called "default_profile.jgp".
