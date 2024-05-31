@@ -5,8 +5,13 @@
     @foreach ($posts as $post)
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">{{ $post->user->pseudo }}</h5>
-                <p class="card-text">{{ $post->content }}</p>
+                <div class="d-flex align-items-center">
+                    @if ($post->user->image)
+                        <img src="{{ asset('storage/' . $post->user->image) }}" class="rounded-circle mr-2" style="width: 40px; height: 40px;" alt="Profile Picture">
+                    @endif
+                    <h5 class="card-title mb-0">{{ $post->user->pseudo }}</h5>
+                </div>
+                <p class="card-text mt-2">{{ $post->content }}</p>
                 @if ($post->image)
                     <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="Post Image">
                 @endif
@@ -36,8 +41,14 @@
                     @foreach ($post->comments as $comment)
                         <div class="card mt-2">
                             <div class="card-body">
-                                <p class="card-text">{{ $comment->content }}</p>
-                                <p class="card-text"><small class="text-muted">Commented by {{ $comment->user->pseudo }} on {{ $comment->created_at->format('d M Y H:i') }}</small></p>
+                                <div class="d-flex align-items-center">
+                                    @if ($comment->user->image)
+                                        <img src="{{ asset('storage/' . $comment->user->image) }}" class="rounded-circle mr-2" style="width: 30px; height: 30px;" alt="Profile Picture">
+                                    @endif
+                                    <p class="card-text mb-0">{{ $comment->user->pseudo }}</p>
+                                </div>
+                                <p class="card-text mt-2">{{ $comment->content }}</p>
+                                <p class="card-text"><small class="text-muted">Commented on {{ $comment->created_at->format('d M Y H:i') }}</small></p>
                                 @can('update', $comment)
                                     <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 @endcan
